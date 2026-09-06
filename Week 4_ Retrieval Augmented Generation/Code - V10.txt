@@ -1,0 +1,27 @@
+To use `vectorstore.similarity_search("Apple Steve Jobs iPhone", k=3)`, everything must already be correctly initialized, including:
+
+- `vectorstore` loaded or built from documents  
+- `embedding_model` set properly  
+- Documents already embedded and stored
+
+Assuming that's done, your line:
+
+```python
+vectorstore.similarity_search("Apple Steve Jobs iPhone", k=3)
+```
+
+Will return the top 3 most semantically similar chunks to the query `"Apple Steve Jobs iPhone"` based on cosine similarity in the embedding space.
+
+### Output
+You will get a list like:
+
+```python
+[Document(page_content="Steve Jobs returned to Apple and changed product development...", metadata={...}),
+ Document(page_content="The iPhone revolutionized mobile technology by integrating...", metadata={...}),
+ Document(page_content="Apple emphasizes end-to-end control, a principle Steve Jobs...", metadata={...})]
+```
+
+Each item is a `Document` object containing:
+- `page_content`: the actual text of the document chunk
+- `metadata`: any additional info like page number or file source
+

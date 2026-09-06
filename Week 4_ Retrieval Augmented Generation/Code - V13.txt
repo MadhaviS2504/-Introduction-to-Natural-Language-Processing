@@ -1,0 +1,20 @@
+Great, that code snippet is correct. It downloads the quantized Mistral model file from Hugging Face using `hf_hub_download`. Once this runs successfully, it will return the local path to the GGUF model file.
+
+Make sure you’ve imported the necessary function at the top of your script:
+
+```python
+from huggingface_hub import hf_hub_download
+```
+
+After the model is downloaded, you can initialize the LLM like this:
+
+```python
+from llama_cpp import Llama
+
+llm = Llama(
+    model_path=model_path,
+    n_ctx=2048,
+    n_threads=8,
+    n_gpu_layers=35  # Adjust this based on your GPU capability
+)
+```

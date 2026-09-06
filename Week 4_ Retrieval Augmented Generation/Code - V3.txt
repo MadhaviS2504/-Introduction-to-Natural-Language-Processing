@@ -1,0 +1,38 @@
+Once you execute the line `apple = pdf_loader.load()`, the variable `apple` will contain the result of loading the PDF using the `PyMuPDFLoader`. Specifically, it will be a list of documents, where each document corresponds to a page in the PDF. Each document object contains the text of the page as well as metadata such as the page number.
+
+### What `apple` Contains:
+- Type: A list of document objects (typically of type `Document`).
+- Each Document: Each element in the list corresponds to a single page in the PDF and contains:
+  - `page_content`: The raw text content from that page.
+  - `metadata`: Metadata related to the page, such as page number.
+
+### Example:
+
+```python
+apple = pdf_loader.load()
+
+# Accessing the content of the first page
+print(apple[0].page_content[:500])  # Print first 500 characters of the first page
+
+# Check metadata for the first page
+print(apple[0].metadata)
+```
+
+### Breakdown:
+1. `apple[0].page_content`: The actual text content of the first page. This is where you'll find the extracted text from the PDF.
+2. `apple[0].metadata`: A dictionary containing metadata about the page. Common metadata includes:
+   - `page_number`: The page number (e.g., 1, 2, 3).
+   - `source`: The file name or source of the document.
+
+### Example Output:
+Assuming the PDF is about Apple’s organizational structure, here’s an example of what the output might look like:
+
+```python
+apple[0].page_content[:500]
+# Output: "Apple is organized in a way that fosters innovation. The company’s teams are structured around key product areas..."
+apple[0].metadata
+# Output: {'page_number': 1, 'source': '/path/to/your/pdf/How_Apple_is_Organized_for_Innovation.pdf'}
+```
+
+### Use Case:
+The `load()` method essentially breaks down the PDF into manageable chunks (one per page) and stores both the content and metadata for further processing (such as embedding, searching, or summarizing).

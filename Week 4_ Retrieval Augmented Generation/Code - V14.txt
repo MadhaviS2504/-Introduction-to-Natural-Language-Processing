@@ -1,0 +1,16 @@
+Your code is nearly correct, but depending on the `llama-cpp-python` version you're using, you might need to include a `prompt` keyword when calling the model.
+
+Try this instead:
+
+```python
+llm("How does Apple develop and ship products that requires good coordination between the teams?")['choices'][0]['text']
+```
+
+If that gives a `TypeError`, use the keyword format:
+
+```python
+llm(prompt="How does Apple develop and ship products that requires good coordination between the teams?")['choices'][0]['text']
+```
+
+This will return the generated response from the Mistral model as a string.
+

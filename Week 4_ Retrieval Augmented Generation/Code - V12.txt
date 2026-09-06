@@ -1,0 +1,26 @@
+You're specifying a GGUF model from Hugging Face to use with `llama-cpp`, which is correct for local inference with quantized models.
+
+Here’s how you can load the model using `llama-cpp-python` (assuming it's installed and compatible):
+
+### Full Load Code
+```python
+from llama_cpp import Llama
+
+model_path = hf_hub_download(
+    repo_id="TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
+    filename="mistral-7b-instruct-v0.2.Q6_K.gguf"
+)
+
+llm = Llama(
+    model_path=model_path,
+    n_ctx=2048,
+    n_threads=8,
+    n_gpu_layers=35  # adjust based on GPU
+)
+```
+
+### Notes:
+- `n_gpu_layers`: Controls how many layers run on GPU (set to 0 for CPU-only).
+- `n_ctx`: Sets the context window size (2048 tokens here).
+- `hf_hub_download` automatically caches the model.
+

@@ -1,0 +1,24 @@
+Your line of code:
+
+```python
+retriever = vectorstore.as_retriever(
+    search_type='similarity',
+    search_kwargs={'k': 2}
+)
+```
+
+is correct and sets up a retriever object that performs similarity search and retrieves the top 2 most relevant document chunks for any given query.
+
+### How it Works:
+- `search_type='similarity'`: Uses cosine similarity between embeddings.
+- `search_kwargs={'k': 2}`: Returns the top 2 most similar chunks.
+
+### Next Step Example:
+You can now use the retriever like this:
+
+```python
+docs = retriever.get_relevant_documents("How does Apple manage innovation?")
+for doc in docs:
+    print(doc.page_content)
+```
+

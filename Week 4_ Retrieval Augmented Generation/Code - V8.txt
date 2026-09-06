@@ -1,0 +1,55 @@
+The code you're using:
+
+```python
+vectorstore = Chroma.from_documents(
+    document_chunks,
+    embedding_model,
+    persist_directory=out_dir
+)
+```
+
+is initializing a Chroma vector store to store document embeddings. This allows you to store and later retrieve embeddings based on their similarity to a given query. Let's break down the components of this code and how it works:
+
+### Explanation:
+
+- `Chroma.from_documents`:
+  - `Chroma` is a vector store that stores document embeddings and allows for efficient retrieval of similar documents using semantic search.
+  - The `from_documents` method is a convenience function for creating a vector store from a list of documents (or document chunks).
+  - This method takes in:
+    1. `document_chunks`: These are the chunks of text that you've processed from the document (using a splitter like `RecursiveCharacterTextSplitter`).
+    2. `embedding_model`: The model you've used to generate the embeddings for your document chunks (e.g., `SentenceTransformerEmbeddings` with `thenlper/gte-large`).
+    3. `persist_directory`: This is the directory where the embeddings and associated metadata will be saved. In this case, it's set to the `apple_db` directory (`out_dir`), so the vector store will be persisted to disk, allowing for later use without needing to recompute embeddings.
+
+### Full Example:
+
+Here's how you would use it:
+
+```python
+from langchain_community.vectorstores import Chroma
+
+# Assuming you've already defined document_chunks and embedding_model
+vectorstore = Chroma.from_documents(
+    document_chunks,
+    embedding_model,
+    persist_directory=out_dir  # Directory to save the embeddings
+)
+
+# Example: You can now query the vectorstore
+query = "How is Apple structured for innovation?"
+results = vectorstore.similarity_search(query, k=5)
+
+# Print the results (top 5 relevant documents/chunks)
+for result in results:
+    print(result)
+```
+
+### What Happens Here?
+1. Document Chunks: The `document_chunks` are the chunks of text you’ve already processed from the PDF.
+2. Embedding Model: The `embedding_model` is used to convert each chunk into its embedding, which will be stored in the `Chroma` vector store.
+3. Persisting Data: The `persist_directory=out_dir` ensures that the embeddings are saved to disk (in the `apple_db` directory). This means that you won't need to recompute the embeddings next time you load the vector store.
+4. Similarity Search: The `vectorstore.similarity_search(query, k=5)` method allows you to search the vector store for the 5 most similar chunks to a given query. This makes it easy to quickly retrieve relevant information based on semantic meaning.
+
+### Important Notes:
+- Persisted Data: Once the embeddings are persisted in `apple_db`, you can later reload the vector store without needing to recompute embeddings.
+- Similarity Search: After creating the vector store, you can use similarity search to retrieve the most relevant chunks of text based on a user's query. The search finds the closest vectors (i.e., embeddings) to the query's embedding.
+

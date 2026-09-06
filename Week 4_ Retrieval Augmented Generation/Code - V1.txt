@@ -1,0 +1,18 @@
+Installs a specific version of the llama-cpp-python package with certain configuration flags. Here's a breakdown of what each part of the command does:
+
+### Command Breakdown:
+1. `!CMAKE_ARGS="-DLLAMA_CUBLAS=on"`: 
+   - This sets an environment variable CMAKE_ARGS to enable CUBLAS during the installation, which is likely to leverage CUDA for better performance when using GPU acceleration (through cuBLAS, a GPU-accelerated BLAS library).
+   
+2. `FORCE_CMAKE=1`:
+   - This environment variable forces CMake to reconfigure the build, ensuring that any previous configurations are overridden during installation.
+   
+3. `pip install llama-cpp-python==0.1.85 --force-reinstall --no-cache-dir -q`:
+   - `pip install llama-cpp-python==0.1.85`: Installs version 0.1.85 of the llama-cpp-python package.
+   - `--force-reinstall`: Forces pip to reinstall the package, even if it’s already installed.
+   - `--no-cache-dir`: Ensures pip does not use cached packages, forcing it to download a fresh version from the repository.
+   - `-q`: Runs the installation quietly, minimizing the output during the process.
+
+### Purpose:
+This command installs a specific version of the llama-cpp-python library with GPU acceleration enabled via cuBLAS. It forces a clean reinstall to ensure the configuration settings are applied properly and avoids any caching issues.
+

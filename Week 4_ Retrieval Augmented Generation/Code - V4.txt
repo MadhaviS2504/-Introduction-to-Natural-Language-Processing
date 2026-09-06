@@ -1,0 +1,49 @@
+The line of code you're showing is creating an instance of `RecursiveCharacterTextSplitter` using the `from_tiktoken_encoder` method. This is used to split large documents or text into smaller, manageable chunks based on specific parameters such as `chunk_size` and `chunk_overlap`.
+
+Here's a detailed explanation of the parameters and how they work:
+
+### `RecursiveCharacterTextSplitter.from_tiktoken_encoder`:
+- `encoding_name='cl100k_base'`:
+  - This specifies the tokenization model (in this case, `cl100k_base`), which is part of the tiktoken tokenizer. The tokenizer breaks the text into tokens, and this encoding name refers to a specific vocabulary size that determines how the text is tokenized.
+  
+- `chunk_size=512`:
+  - This sets the maximum token length for each chunk of text. Each chunk will contain no more than 512 tokens. When working with large documents, this ensures that each chunk fits within the token limits of a model like GPT, making it easier to process.
+
+- `chunk_overlap=20`:
+  - This creates overlap between consecutive chunks. With an overlap of 20 tokens, each chunk will contain 20 tokens from the end of the previous chunk. This helps preserve context, ensuring that information from the end of one chunk is carried over to the next, which is particularly useful for maintaining coherence when processing long texts.
+
+### Example Usage:
+Once you've set up the text splitter, you can use it to split a document (like the text from a PDF) into chunks:
+
+```python
+# Assuming `apple` is the result from loading the PDF
+document_text = apple[0].page_content  # Get the text of the first page
+
+# Split the text into chunks
+chunks = text_splitter.split_text(document_text)
+
+# Displaying the first few chunks
+for i, chunk in enumerate(chunks[:3]):  # Show first 3 chunks
+    print(f"Chunk {i+1}:\n{chunk[:200]}...")  # Print the first 200 characters of each chunk
+```
+
+### Why Use Text Splitters?
+- When working with large text documents (like PDFs), models such as GPT have a token limit (e.g., 4096 tokens or more). Splitting the text into smaller chunks helps make sure each chunk fits within these limits, enabling the model to process and understand the content in smaller, more manageable parts.
+- Chunk overlap helps preserve context between chunks, which is crucial for tasks like summarization or question answering, where the continuity of information is important.
+
+### Example Output:
+If the first page of the document is quite large, you might see output like this for the first few chunks:
+
+```python
+Chunk 1:
+"Apple is structured in a way that encourages innovation. It is organized into different product areas such as hardware, software, and services. Each of these areas has its own specialized team that works collaboratively on specific projects, like the iPhone or the Mac."
+
+Chunk 2:
+"These teams are made up of designers, engineers, and other specialists who are highly skilled in their fields. The collaboration between different teams allows Apple to create products that integrate seamlessly and provide users with the best possible experience."
+
+Chunk 3:
+"To support innovation, Apple also fosters a culture of learning and knowledge sharing. Employees are encouraged to participate in internal workshops and seminars, where they can present ideas and share insights with colleagues from other departments."
+```
+
+This chunking process helps ensure that the model can process each part independently and that no important context is lost due to token limits.
+
